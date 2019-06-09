@@ -5,7 +5,7 @@
  *   - power LED
  *   - status LED
  *   - toggle switch
- *   - "send off button"?
+ *   - "send off" button
  * 
  * When run:
  *   - Sets relay to OFF
@@ -19,7 +19,7 @@
  *   - When switch flipped off or off button hit:
  *     - sends signal to reciever to turn off switch
  *     - lights up status LED half/yellow
- *   - When recieved OFF confirmation:
+ *   - When recieved OFF confirmation/ 5 secs after last ON confirmation:
  *     - turns off status LED
  *     
  * By Greg Stewart

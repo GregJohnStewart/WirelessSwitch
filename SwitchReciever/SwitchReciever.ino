@@ -12,13 +12,12 @@
  *   - turns on power LED
  *   - When recieves signal to switch:
  *     - Switches relay on
- *     - Sends signal out to confirm
  *     - Turns on status LED
+ *   - While switch is "ON":
+ *     - periodically send out "ON" confirmation signal
  *   - When recieves signal to switch off:
  *     - Switches relay off
- *     - sends out signal to confirm
  *     - Turns off status LED
- * 
  * 
  * 
  * 
@@ -28,12 +27,21 @@
 
 #include <SoftwareSerial.h>
 
+// for communicating with HC-12
 #define txPin 10
 #define rxPin 11
+#define setPin 12
 
-#define setPin 6
-#define button1 4
-#define button2 3
+//for switching the relay
+#define relayPin 13
+
+// For other functionality
+#define readyLed 8 // switched ON when setup is complete and ready to recieve
+#define statusLed 7 // LED to indicate status of switch
+
+/*
+ * Constants for signals
+ */
 
 /* 
  * setup for transiever, read/writing
