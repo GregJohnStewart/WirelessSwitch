@@ -15,6 +15,8 @@
  *     - Turns on status LED
  *   - While switch is "ON":
  *     - periodically send out "ON" confirmation signal
+ *   - While switch is "OFF":
+ *     - periodically send out "OFF" confirmation signal
  *   - When recieves signal to switch off:
  *     - Switches relay off
  *     - Turns off status LED
@@ -27,10 +29,13 @@
 
 #include <SoftwareSerial.h>
 
+#define baudRate 9600
+
 // for communicating with HC-12
 #define txPin 10
 #define rxPin 11
 #define setPin 12
+#define sendOnDelay 2000
 
 //for switching the relay
 #define relayPin 13
@@ -42,23 +47,25 @@
 /*
  * Constants for signals
  */
+#define onBytes String("SET RELAY ON")
+#define onValue 1
+#define offBytes String("RELAY OFF")
+#define offValue 0
 
-/* 
- * setup for transiever, read/writing
- */
-SoftwareSerial HC12(txPin, rxPin);
-byte incomingByte;
-String readBuffer = "";
-
+boolean signalOn = false;
 
 void setup() {
   //setup serial ports
-  Serial.begin(9600);
-  HC12.begin(9600);
-
+  Serial.begin(baudRate);
+  setupRelay();
+  setupTransciever();
+  
+  pinMode(readyLed, OUTPUT);
+  digitalWrite(readyLed, HIGH);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  doRelay();
+  doTransciever();
 }
