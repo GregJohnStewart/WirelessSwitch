@@ -48,9 +48,7 @@
  * Constants for signals
  */
 #define onBytes String("SET RELAY ON")
-#define onValue 1
 #define offBytes String("RELAY OFF")
-#define offValue 0
 
 boolean signalOn = false;
 
