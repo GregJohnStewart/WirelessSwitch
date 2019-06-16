@@ -18,9 +18,9 @@ void checkForSignal() {
     readBuffer += char(incomingByte);    // Add each byte to ReadBuffer string variable
   }
 
-  if (onBytes.equals(readBuffer)) {
+  if (setOnBytes.equals(readBuffer)) {
     signalOn = true;
-  } else if (offBytes.equals(readBuffer)) {
+  } else if (setOffBytes.equals(readBuffer)) {
     signalOn = false;
   }
   delay(100);
@@ -30,7 +30,7 @@ void sendOnConfirm() {
   unsigned long current = millis();
   unsigned long difference = current - lastSendOnSignal;
 
-  if (difference <= sendOnDelay) {
+  if (difference <= sendStatusDelay) {
     lastSendOnSignal = current;
     if (signalOn) {
       HC12.write(onBytes.c_str());

@@ -35,7 +35,7 @@
 #define txPin 10
 #define rxPin 11
 #define setPin 12
-#define sendOnDelay 2000
+#define sendStatusDelay 5000
 
 //for switching the relay
 #define relayPin 13
@@ -47,8 +47,10 @@
 /*
  * Constants for signals
  */
-#define onBytes String("SET RELAY ON")
-#define offBytes String("RELAY OFF")
+#define setOnBytes String("SET RELAY ON")
+#define setOffBytes String("SET RELAY OFF")
+#define onBytes String("STATUS: RELAY IS ON")
+#define offBytes String("STATUS: RELAY IS OFF")
 
 boolean signalOn = false;
 
