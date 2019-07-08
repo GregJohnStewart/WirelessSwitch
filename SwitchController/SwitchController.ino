@@ -8,7 +8,6 @@
  *   - "send off" button
  * 
  * When run:
- *   - Sets relay to OFF
  *   - listens for signal that switch activated and local switch flipped
  *   - turns on power LED
  *   - When switch flipped On:
@@ -26,13 +25,18 @@
  * Created 6/3/19
  */
 
-#include <SoftwareSerial.h>
+// #include <SoftwareSerial.h>
 #include "Buttons.cpp"
 #include "Switches.cpp"
 #include "Transciever.cpp"
 #include "LEDs.cpp"
 
 #define baudRate 9600
+
+// for communicating with HC-12
+#define txPin 10
+#define rxPin 11
+#define setPin 12
 
 
 // For other functionality
@@ -48,6 +52,13 @@
 #define eSwitchPin 4
 #define sendOffButtonPin 3
 
+/*
+ * Constants for status LED
+ */
+#define offConfirmed LedColorChoice::OFF
+#define waitForConfirm LedColorChoice::YELLOW
+#define onConfirmed LedColorChoice::RED
+
 
 enum ActionState{
   WAITING,
@@ -55,11 +66,16 @@ enum ActionState{
   SEND_OFF_SIGNAL
 };
 
-ButtonHandler eSwitch(eSwitchPin);
-SwitchHandler sendOffButton(sendOffButtonPin);
 LedHandler readyLed(readyLedPin);
 RGBLedHandler statusLed(statusLedRPin, statusLedGPin, statusLedBPin);
 
+TranscieverHandler transHand(txPin, rxPin, setPin, baudRate);
+SwitchHandler eSwitch(eSwitchPin);
+ButtonHandler sendOffButton(sendOffButtonPin);
+
+
+
+ActionState state = WAITING;
 
 void setup() {
   Serial.begin(baudRate);
@@ -69,12 +85,17 @@ void setup() {
   sendOffButton.init();
   readyLed.init();
   statusLed.init();
-  setupTransciever();
+  transHand.init();
 
   readyLed.turnOn();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // do actions for set state
 
+
+
+  // read in data
+  
+  
 }

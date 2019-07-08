@@ -16,7 +16,6 @@ enum class SwitchStatus {
 
 class SwitchHandler {
   public:
-    // Constructor
     SwitchHandler(int pinIn): pin(pinIn) {
 
     }
