@@ -41,12 +41,15 @@ class TranscieverHandler {
       delay(100);
 
       if (onBytes.equals(readBuffer)) {
+        Serial.write("\tGot string saying relay is on\n");
         readBuffer = "";
         return TransReadStatus::RELAY_ON;
       } else if (offBytes.equals(readBuffer)) {
+        Serial.write("\tGot string saying relay is off\n");
         readBuffer = "";
         return TransReadStatus::RELAY_OFF;
       }
+      Serial.write("\tGot no data\n");
       readBuffer = "";
       return TransReadStatus::NO_DATA;
     }
@@ -68,9 +71,10 @@ class TranscieverHandler {
     void sendOn(){
       unsigned long current = millis();
       unsigned long difference = current - lastSendOnSignal;
-      if (difference <= sendOnDelay) {
+      if (difference >= sendOnDelay) {
+        Serial.write("\tSending the ON message\n");
         lastSendOnSignal = current;
-        hc12.write(onBytes.c_str());
+        hc12.write(setOnBytes.c_str());
         delay(100);
       }
     }

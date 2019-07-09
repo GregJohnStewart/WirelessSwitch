@@ -37,10 +37,10 @@ enum class LedColorChoice {
   RED = 1,
   GREEN = 2,
   BLUE = 4,
-  WHITE = (RED & GREEN & BLUE),
-  YELLOW = (RED & GREEN),
-  LIGHT_BLUE = (BLUE & GREEN),
-  MAGENTA = (BLUE & RED),
+  WHITE = (RED | GREEN | BLUE),
+  YELLOW = (RED | GREEN),
+  LIGHT_BLUE = (BLUE | GREEN),
+  MAGENTA = (BLUE | RED),
 };
 
 class RGBLedHandler {
@@ -65,21 +65,25 @@ class RGBLedHandler {
       digitalWrite(bPin, LOW);
     }
 
+    void switchLed(LedColorChoice stateChoice){
+      this->switchLed((int)stateChoice);
+    }
+
     void switchLed(int stateChoices){
-      if(stateChoices | (int)LedColorChoice::RED){
-        digitalWrite(rPin, LOW);
-      } else {
+      if((stateChoices & (int)LedColorChoice::RED) != 0){
         digitalWrite(rPin, HIGH);
-      }
-      if(stateChoices | (int)LedColorChoice::GREEN){
-        digitalWrite(gPin, LOW);
       } else {
+        digitalWrite(rPin, LOW);
+      }
+      if((stateChoices & (int)LedColorChoice::GREEN) != 0){
         digitalWrite(gPin, HIGH);
-      }
-      if(stateChoices | (int)LedColorChoice::BLUE){
-        digitalWrite(bPin, LOW);
       } else {
+        digitalWrite(gPin, LOW);
+      }
+      if((stateChoices & (int)LedColorChoice::BLUE) != 0){
         digitalWrite(bPin, HIGH);
+      } else {
+        digitalWrite(bPin, LOW);
       }
     }
 

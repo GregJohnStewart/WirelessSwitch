@@ -8,10 +8,10 @@
 #define DELAY                    20  // Delay per loop in ms
 
 enum class SwitchStatus {
-  NO_CHANGE_OFF = 0,
-  NO_CHANGE_ON = 0,
-  CHANGE_OFF = 0,
-  CHANGE_ON = 0,
+  NO_CHANGE_OFF,
+  NO_CHANGE_ON,
+  CHANGE_OFF,
+  CHANGE_ON
 };
 
 class SwitchHandler {
@@ -30,7 +30,7 @@ class SwitchHandler {
     // Handler, to be called in the loop()
     SwitchStatus handle() {
       int event;
-      boolean now_pressed = !digitalRead(pin);
+      boolean now_pressed = digitalRead(pin);
 
       if (was_pressed) {
         if (now_pressed) {

@@ -65,6 +65,8 @@ void setup() {
 }
 
 void loop() {
+  Serial.write("Start of loop\n");
   doRelay();
   doTransciever();
+  delay(250);
 }

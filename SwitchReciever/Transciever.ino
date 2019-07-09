@@ -18,11 +18,18 @@ void checkForSignal() {
     readBuffer += char(incomingByte);    // Add each byte to ReadBuffer string variable
   }
 
+  Serial.write("\tGot the following data: \"");
+  Serial.write(readBuffer.c_str());
+  Serial.write("\"\n");
+
   if (setOnBytes.equals(readBuffer)) {
+    Serial.write("\tGot relay on message\n");
     signalOn = true;
   } else if (setOffBytes.equals(readBuffer)) {
+    Serial.write("\tGot relay off message\n");
     signalOn = false;
   }
+  readBuffer = "";
   delay(100);
 }
 
@@ -33,8 +40,10 @@ void sendOnConfirm() {
   if (difference <= sendStatusDelay) {
     lastSendOnSignal = current;
     if (signalOn) {
+      Serial.write("\tSending status message: On\n");
       HC12.write(onBytes.c_str());
     } else {
+      Serial.write("\tSending status message: Off\n");
       HC12.write(offBytes.c_str());
     }
     delay(100);

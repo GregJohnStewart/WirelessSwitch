@@ -7,7 +7,7 @@
 */
 void setupRelay() {
   pinMode(relayPin, OUTPUT);
-  digitalWrite(relayPin, LOW);
+  digitalWrite(relayPin, HIGH);
 
   pinMode(statusLed, OUTPUT);
   digitalWrite(statusLed, LOW);
@@ -18,10 +18,12 @@ void setupRelay() {
 */
 void doRelay() {
   if (signalOn) {
-    digitalWrite(relayPin, HIGH);
+    Serial.write("\tRelay set to ON\n");
+    digitalWrite(relayPin, LOW);
     digitalWrite(statusLed, HIGH);
   } else {
-    digitalWrite(relayPin, LOW);
+    Serial.write("\tRelay set to OFF\n");
+    digitalWrite(relayPin, HIGH);
     digitalWrite(statusLed, LOW);
   }
 }
